@@ -35,7 +35,10 @@ func BuildPostRequestWithArrayData(urlStr string, data []string) (*http.Request,
 
 	body, _ := json.Marshal(data)
 
-	request, _ := http.NewRequest("POST", urlStr, bytes.NewBuffer(body))
+	request, err := http.NewRequest("POST", urlStr, bytes.NewBuffer(body))
+	if err != nil {
+		return nil, err
+	}
 	request.Header.Set("authorization", token)
 	request.Header.Set("Content-Type", "application/json")
 
@@ -50,7 +53,10 @@ func BuildPostRequestWithMapData(urlStr string, data map[string]string) (*http.R
 
 	body, _ := json.Marshal(data)
 
-	request, _ := http.NewRequest("POST", urlStr, bytes.NewBuffer(body))
+	request, err := http.NewRequest("POST", urlStr, bytes.NewBuffer(body))
+	if err != nil {
+		return nil, err
+	}
 	request.Header.Set("authorization", token)
 	request.Header.Set("Content-Type", "application/json")
 

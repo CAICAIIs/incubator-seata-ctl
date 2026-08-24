@@ -112,7 +112,11 @@ func ReloadConfiguration() {
 		os.Exit(0)
 	}
 
-	request, _ := http.NewRequest("POST", url, nil)
+	request, err := http.NewRequest("POST", url, nil)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
 	request.Header.Set("authorization", token)
 	request.Header.Set("Content-Type", "application/json")
 	resp, err := defaultHTTPClient.Do(request)
