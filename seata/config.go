@@ -43,7 +43,7 @@ func GetConfigurations(params []string) (string, error) {
 		return "", err
 	}
 
-	resp, err := (&http.Client{}).Do(request)
+	resp, err := defaultHTTPClient.Do(request)
 	if err != nil {
 		return "", err
 	}
@@ -81,7 +81,7 @@ func SetConfiguration(data map[string]string, configType ConfigType) (string, er
 		return "", err
 	}
 
-	resp, err := (&http.Client{}).Do(request)
+	resp, err := defaultHTTPClient.Do(request)
 	if err != nil {
 		return "", err
 	}
@@ -112,10 +112,14 @@ func ReloadConfiguration() {
 		os.Exit(0)
 	}
 
-	request, _ := http.NewRequest("POST", url, nil)
+	request, err := http.NewRequest("POST", url, nil)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
 	request.Header.Set("authorization", token)
 	request.Header.Set("Content-Type", "application/json")
-	resp, err := (&http.Client{}).Do(request)
+	resp, err := defaultHTTPClient.Do(request)
 	if err != nil {
 		return
 	}

@@ -39,9 +39,13 @@ func BeginTxn(timeout int) {
 		fmt.Println("Please login again!")
 		os.Exit(0)
 	}
-	request, _ := http.NewRequest("POST", url, nil)
+	request, err := http.NewRequest("POST", url, nil)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
 	request.Header.Set("authorization", token)
-	resp, err := (&http.Client{}).Do(request)
+	resp, err := defaultHTTPClient.Do(request)
 	if err != nil {
 		return
 	}
@@ -72,9 +76,13 @@ func CommitTxn(xid string) {
 		fmt.Println("Please login again!")
 		os.Exit(0)
 	}
-	request, _ := http.NewRequest("POST", url, nil)
+	request, err := http.NewRequest("POST", url, nil)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
 	request.Header.Set("authorization", token)
-	resp, err := (&http.Client{}).Do(request)
+	resp, err := defaultHTTPClient.Do(request)
 	if err != nil {
 		return
 	}
@@ -105,9 +113,13 @@ func RollbackTxn(xid string) {
 		fmt.Println("Please login again!")
 		os.Exit(0)
 	}
-	request, _ := http.NewRequest("POST", url, nil)
+	request, err := http.NewRequest("POST", url, nil)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
 	request.Header.Set("authorization", token)
-	resp, err := (&http.Client{}).Do(request)
+	resp, err := defaultHTTPClient.Do(request)
 	if err != nil {
 		return
 	}
